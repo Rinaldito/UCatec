@@ -1,48 +1,32 @@
-version: '3.7'
+version: '3.8'
 
 services:
-  postgresql:
+  postgres:
     image: postgres:latest
-    container_name: postgresql
+    container_name: my_postgres
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: examen_parcial
+      POSTGRES_USER: Examen
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: testdb
     ports:
       - "5432:5432"
     volumes:
-      - postgresql_data:/var/lib/postgresql/data
-    networks:
-      - examen_network
+      - pgdata:/var/lib/postgresql/data
 
   mongodb:
     image: mongo:latest
-    container_name: mongodb
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
-      MONGO_INITDB_DATABASE: examen_parcial_db
+    container_name: my_mongodb
     ports:
       - "27017:27017"
     volumes:
-      - mongodb_data:/data/db
-    networks:
-      - examen_network
+      - mongo_data:/data/db
 
   nginx:
     image: nginx:latest
-    container_name: nginx
+    container_name: my_nginx
     ports:
       - "80:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    networks:
-      - examen_network
-
-networks:
-  examen_network:
-    driver: bridge
 
 volumes:
-  postgresql_data:
-  mongodb_data:
+  pgdata:
+  mongo_data:
